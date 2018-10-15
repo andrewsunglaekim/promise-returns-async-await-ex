@@ -1,14 +1,20 @@
 const input = document.querySelector('.forecast__location-input');
 const forecastView = new ForecastView();
 
-input.addEventListener('keypress', (e) => {
+input.addEventListener('keypress', async function(e) {
   if (e.keyCode === 13){
-    getLatLng(input.value).then((getLatLngRes) => {
-      getWeather(getLatLngRes).then((getWeatherRes) => {
-        const forecast = new Forecast(getWeatherRes.data);
-        forecastView.setForecast(forecast);
-      })
-    });
+    // async/await implementation
+    const latLng = await getLatLng(input.value)
+    const getWeatherRes = await getWeather(latLng)
+    const forecast = new Forecast(getWeatherRes.data)
+    forecastView.setForecast(forecast)
+    // old promise implementation
+    // getLatLng(input.value).then((getLatLngRes) => {
+    //   getWeather(getLatLngRes).then((getWeatherRes) => {
+    //     const forecast = new Forecast(getWeatherRes.data);
+    //     forecastView.setForecast(forecast);
+    //   })
+    // });
   }
 })
 
