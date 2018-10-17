@@ -4,8 +4,8 @@ class ForecastIcon {
     const iconEl = document.createElement('canvas')
     iconEl.id = type;
     iconEl.className = 'forecast__icon'
-    iconEl.width = 64;
-    iconEl.height = 64;
+    iconEl.width = 128;
+    iconEl.height = 128;
     this.type = type;
     this.iconEl = iconEl;
   }

@@ -1,6 +1,6 @@
 .forecast {
   margin: auto;
-  width: 30%;
+  width: 300px;
 }
 
 .forecast__forecast-label {
@@ -18,17 +18,18 @@
   height: 30px;
   font: 400 18px/20px Ubuntu;
   padding: 4px 14px;
+  outline: none;
 }
 
 .forecast__forecast-summary {
   border-top: 1px solid #cecece;
-  font: 400 18px/20px Ubuntu;
+  font: 400 34px/38px Ubuntu;
   padding-top: 16px;
   text-align:center;
 }
 
 .forecast__forecast-temperature {
-  font: 400 18px/20px Ubuntu;
+  font: 400 28px/30px Ubuntu;
   text-align:center;
 }
 
