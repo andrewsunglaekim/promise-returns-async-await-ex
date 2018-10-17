@@ -3,30 +3,27 @@ const forecastView = new ForecastView();
 
 input.addEventListener('keypress', async function(e) {
   if (e.keyCode === 13){
-    console.log(e.target.value);
-    getLatLng(e.target.value).then(({lat, lng}) => {
-      getWeather({lat, lng}).then((weatherRes) => {
-        const forecast = new Forecast(weatherRes.data);
-        forecastView.setForecast(forecast)
-      })
-    })
+    const latLng = await getLatLng(input.value)
+    const getWeatherRes = await getWeather(latLng)
+    const forecast = new Forecast(getWeatherRes.data)
+    forecastView.setForecast(forecast)
   }
 })
 
-function getLatLng(location){
-  return axios.get(`http://www.mapquestapi.com/geocoding/v1/address?key=<api-key-here>&location=${location}`)
-    .then((res) => {
-      return res.data.results[0].locations[0].latLng
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+async function getLatLng(location){
+  try {
+    const res = await axios.get(`http://www.mapquestapi.com/geocoding/v1/address?key=<api-key-here>&location=${location}`);
+    return res.data.results[0].locations[0].displayLatLng;
+  } catch (err) {
+    throw new Error(err);
+  }
 }
 
-function getWeather({lat, lng}){
-  return axios.get(`https://api.darksky.net/forecast/<api-key-here>/${lat},${lng}`)
-    .then(res => res)
-    .catch((err) => {
-      console.log(err);
-    })
+async function getWeather({lat, lng}){
+  try {
+    const res = await axios.get(`https://api.darksky.net/forecast/<api-key-here>/${lat},${lng}`)
+    return res;
+  } catch (err) {
+    throw new Error(err);
+  }
 }
