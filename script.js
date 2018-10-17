@@ -5,14 +5,10 @@ input.addEventListener('keypress', async function(e) {
   if (e.keyCode === 13){
     console.log(e.target.value);
     getLatLng(e.target.value).then(({lat, lng}) => {
-      const forecast = new Forecast({
-        currently: {
-          temperature: 59,
-          summary: `${lat},${lng}`,
-          icon: 'rain'
-        }
+      getWeather({lat, lng}).then((weatherRes) => {
+        const forecast = new Forecast(weatherRes.data);
+        forecastView.setForecast(forecast)
       })
-      forecastView.setForecast(forecast)
     })
   }
 })
@@ -25,4 +21,12 @@ function getLatLng(location){
     .catch((err) => {
       console.log(err);
     });
+}
+
+function getWeather({lat, lng}){
+  return axios.get(`https://api.darksky.net/forecast/<api-key-here>/${lat},${lng}`)
+    .then(res => res)
+    .catch((err) => {
+      console.log(err);
+    })
 }
